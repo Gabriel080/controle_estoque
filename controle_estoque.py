@@ -27,6 +27,30 @@ conn = mysql.connector.connect(
     port=banco["port"],
 )
 
+def saida_equipamento():
+    linha = tela_lista.tableWidget.currentRow()
+    valor_id = int(tela_lista.tableWidget.item(linha, 0).text())
+
+    cursor = conn.cursor()
+    cursor.execute("SELECT quantidade FROM produtos WHERE id = %s", (valor_id,))
+    quantidade_atual = cursor.fetchone()[0]
+
+    quantidade_saida, ok = QtWidgets.QInputDialog.getInt(
+        tela_lista, "Quantidade de Saída", "Informe a quantidade de saída:"
+    )
+
+    if ok:
+    if quantidade_saida > 0 and quantidade_saida <= quantidade_atual:
+       nova_quantidade = quantidade_atual - quantidade_saida
+       cursor.execute(
+       "UPDATE produtos SET quantidade = %s WHERE id = %s",
+       (nova_quantidade, valor_id),
+       )
+       conn.commit()
+       listar_produtos()
+       print(f"{quantidade_saida} unidades foram retiradas do estoque.")
+       else:
+       print("Quantidade inválida ou estoque insuficiente.")
 
 def editar_produtos():
     global numero_id
@@ -167,6 +191,7 @@ tela_lista.pushButton_2.clicked.connect(excluir_produtos)
 tela_lista.pushButton_3.clicked.connect(editar_produtos)
 tela_editar.pushButton.clicked.connect(salvar_edicao)
 tela_lista.pushButton.clicked.connect(exportar_xlsx)
+tela_lista.pushButton_4.clicked.connect(saida_equipamento)
 
 controle.show()
 app.exec()
