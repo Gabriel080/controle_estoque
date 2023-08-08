@@ -7,14 +7,14 @@ from PyQt5.QtCore import QDate
 
 numero_id = 0
 
-caminho_controle_ui = r"C: Digite o Caminho do arquivo .ui"
-caminho_editar_produto_ui = r"C: Digite o Caminho do arquivo .ui"
-caminho_lista_ui = r"C: Digite o Caminho do arquivo .ui"
+caminho_controle_ui = r"C:\Users\gabriel.ribeiro\OneDrive - Moovi Comunicação e meios de pagamento EIRELI\Área de Trabalho\Projeto"
+caminho_editar_produto_ui = r"C:\Users\gabriel.ribeiro\OneDrive - Moovi Comunicação e meios de pagamento EIRELI\Área de Trabalho\Projeto\editar_produto.ui"
+caminho_lista_ui = r"C:\Users\gabriel.ribeiro\OneDrive - Moovi Comunicação e meios de pagamento EIRELI\Área de Trabalho\Projeto\lista.ui"
 
 banco = {
-    "user": "Seu Usuário",
-    "password": "Digite sua senha",
-    "host": "Seu localhost",
+    "user": "root",
+    "password": "Tch@2023",
+    "host": "localhost",
     "database": "controle_estoque",
     "port": 3306,
 }
@@ -26,6 +26,7 @@ conn = mysql.connector.connect(
     database=banco["database"],
     port=banco["port"],
 )
+
 
 def saida_equipamento():
     linha = tela_lista.tableWidget.currentRow()
@@ -40,17 +41,18 @@ def saida_equipamento():
     )
 
     if ok:
-    if quantidade_saida > 0 and quantidade_saida <= quantidade_atual:
-       nova_quantidade = quantidade_atual - quantidade_saida
-       cursor.execute(
-       "UPDATE produtos SET quantidade = %s WHERE id = %s",
-       (nova_quantidade, valor_id),
-       )
-       conn.commit()
-       listar_produtos()
-       print(f"{quantidade_saida} unidades foram retiradas do estoque.")
-       else:
-       print("Quantidade inválida ou estoque insuficiente.")
+        if quantidade_saida > 0 and quantidade_saida <= quantidade_atual:
+            nova_quantidade = quantidade_atual - quantidade_saida
+            cursor.execute(
+                "UPDATE produtos SET quantidade = %s WHERE id = %s",
+                (nova_quantidade, valor_id),
+            )
+            conn.commit()
+            listar_produtos()
+            print(f"{quantidade_saida} unidades foram retiradas do estoque.")
+        else:
+            print("Quantidade inválida ou estoque insuficiente.")
+
 
 def editar_produtos():
     global numero_id
@@ -71,10 +73,17 @@ def editar_produtos():
     tela_editar.lineEdit_5.setText(str(produto[4]))
     tela_editar.lineEdit_6.setText(str(produto[5]))
     tela_editar.lineEdit_7.setText(str(produto[6]))
+    
+    #bloqueia a edição da coluna
+    tela_editar.lineEdit_7.setDisabled(True)
+    tela_editar.lineEdit.setDisabled(True)
+    
 
 
 def salvar_edicao():
     global numero_id
+    linha = tela_lista.tableWidget.currentRow()
+    valor_id = int(tela_lista.tableWidget.item(linha, 0).text())
 
     produto = tela_editar.lineEdit_2.text()
     descricao = tela_editar.lineEdit_3.text()
@@ -92,16 +101,29 @@ def salvar_edicao():
 
     tela_editar.close()
     tela_lista.close()
+    listar_produtos()
 
 
 def excluir_produtos():
     linha = tela_lista.tableWidget.currentRow()
     valor_id = int(tela_lista.tableWidget.item(linha, 0).text())
 
-    tela_lista.tableWidget.removeRow(linha)
+    # Mostra um diálogo de mensagem de confirmação
+    confirmacao = QtWidgets.QMessageBox.question(
+        tela_lista, "Confirmar Exclusão", "Tem certeza que deseja excluir o produto?",
+        QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No
+    )
 
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM produtos WHERE id = %s", (valor_id,))
+    if confirmacao == QtWidgets.QMessageBox.Yes:
+        tela_lista.tableWidget.removeRow(linha)
+
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM produtos WHERE id = %s", (valor_id,))
+        conn.commit()
+        print("Produto excluído com sucesso.")
+    else:
+        print("Exclusão cancelada.")
+
 
 
 def exportar_xlsx():
