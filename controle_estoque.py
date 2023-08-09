@@ -12,8 +12,8 @@ caminho_editar_produto_ui = r"C:digite o caminho"
 caminho_lista_ui = r"C:digite o caminho"
 
 banco = {
-    "user": "root",
-    "password": "Tch@2023",
+    "user": "seu root",
+    "password": "senha",
     "host": "localhost",
     "database": "controle_estoque",
     "port": 3306,
