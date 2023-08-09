@@ -7,9 +7,9 @@ from PyQt5.QtCore import Qt
 
 numero_id = 0
 
-caminho_controle_ui = r"C:\Users\gabriel.ribeiro\OneDrive - Moovi Comunicação e meios de pagamento EIRELI\Área de Trabalho\Projeto"
-caminho_editar_produto_ui = r"C:\Users\gabriel.ribeiro\OneDrive - Moovi Comunicação e meios de pagamento EIRELI\Área de Trabalho\Projeto\editar_produto.ui"
-caminho_lista_ui = r"C:\Users\gabriel.ribeiro\OneDrive - Moovi Comunicação e meios de pagamento EIRELI\Área de Trabalho\Projeto\lista.ui"
+caminho_controle_ui = r"C:digite o caminho"
+caminho_editar_produto_ui = r"C:digite o caminho"
+caminho_lista_ui = r"C:digite o caminho"
 
 banco = {
     "user": "root",
