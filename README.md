@@ -32,11 +32,11 @@ Exportar para Excel: Clique no botão "Exportar para Excel" para gerar um arquiv
 
 *Configurações do Banco de Dados
 
-O aplicativo está configurado para se conectar a um servidor MySQL local com as seguintes credenciais:
+O aplicativo está configurado para se conectar a um servidor MySQL local.
 
-Usuário: root
-Senha: Tch@2023
-Host: localhost
+Usuário: 
+Senha: 
+Host: 
 Banco de Dados: controle_estoque
 Porta: 3306
 
