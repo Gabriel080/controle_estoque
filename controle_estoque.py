@@ -2,8 +2,8 @@ import os
 from PyQt5 import uic, QtWidgets
 import mysql.connector
 import pandas as pd
-from datetime import date
 from PyQt5.QtCore import QDate
+from PyQt5.QtCore import Qt
 
 numero_id = 0
 
@@ -73,11 +73,10 @@ def editar_produtos():
     tela_editar.lineEdit_5.setText(str(produto[4]))
     tela_editar.lineEdit_6.setText(str(produto[5]))
     tela_editar.lineEdit_7.setText(str(produto[6]))
-    
-    #bloqueia a edição da coluna
+
+    # bloqueia a edição da coluna
     tela_editar.lineEdit_7.setDisabled(True)
     tela_editar.lineEdit.setDisabled(True)
-    
 
 
 def salvar_edicao():
@@ -110,8 +109,10 @@ def excluir_produtos():
 
     # Mostra um diálogo de mensagem de confirmação
     confirmacao = QtWidgets.QMessageBox.question(
-        tela_lista, "Confirmar Exclusão", "Tem certeza que deseja excluir o produto?",
-        QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No
+        tela_lista,
+        "Confirmar Exclusão",
+        "Tem certeza que deseja excluir o produto?",
+        QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
     )
 
     if confirmacao == QtWidgets.QMessageBox.Yes:
@@ -123,7 +124,6 @@ def excluir_produtos():
         print("Produto excluído com sucesso.")
     else:
         print("Exclusão cancelada.")
-
 
 
 def exportar_xlsx():
@@ -164,41 +164,47 @@ def registrar_produtos():
     elif controle.radioButton_2.isChecked():
         print("Categoria Telefone foi selecionado")
         categoria = "Telefone"
-    else:
+    elif controle.radioButton_3.isChecked():
         print("Categoria Acessórios foi selecionado")
         categoria = "Acessórios"
 
-    print("Produto:", linha1)
-    print("Descrição:", linha2)
-    print("Preço:", linha3)
-    print("Data:", linha4)
-    print("Quantidade:", linha5)
-
-    cursor = conn.cursor()
-    comando_SQL = "INSERT INTO produtos (produto,descricao,preco,categoria,data,quantidade) VALUES (%s,%s,%s,%s,%s,%s)"
-    dados = (str(linha1), str(linha2), str(linha3), categoria, str(linha4), str(linha5))
-    cursor.execute(comando_SQL, dados)
-    conn.commit()
-    controle.lineEdit.setText("")
-    controle.lineEdit_2.setText("")
-    controle.lineEdit_3.setText("")
-    controle.dateEdit.setDate(QDate(2023, 1, 1))
-    controle.spinBox.setValue(0)
+    if linha1 and linha2 and linha3 and categoria and linha4 and linha5:
+        cursor = conn.cursor()
+        comando_SQL = "INSERT INTO produtos (produto,descricao,preco,categoria,data,quantidade) VALUES (%s,%s,%s,%s,%s,%s)"
+        dados = (
+            str(linha1),
+            str(linha2),
+            str(linha3),
+            categoria,
+            str(linha4),
+            str(linha5),
+        )
+        cursor.execute(comando_SQL, dados)
+        conn.commit()
+        controle.lineEdit.setText("")
+        controle.lineEdit_2.setText("")
+        controle.lineEdit_3.setText("")
+        controle.dateEdit.setDate(QDate(2023, 1, 1))
+        controle.spinBox.setValue(0)
+    else:
+        QtWidgets.QMessageBox.critical(
+            controle, "Erro", "Todos os campos devem ser preenchidos."
+        )
 
 
 def listar_produtos():
     tela_lista.show()
 
     cursor = conn.cursor()
-    comando_SQL = "SELECT * FROM produtos"
+    comando_SQL = "SELECT * FROM produtos ORDER BY data DESC"
     cursor.execute(comando_SQL)
     dados_lidos = cursor.fetchall()
 
     tela_lista.tableWidget.setRowCount(len(dados_lidos))
-    tela_lista.tableWidget.setColumnCount(7)
+    tela_lista.tableWidget.setColumnCount(7)  # Ajuste o número de colunas
 
     for i in range(0, len(dados_lidos)):
-        for j in range(0, 7):
+        for j in range(0, 7):  # Ajuste o número de colunas
             item = str(dados_lidos[i][j])
             tela_lista.tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(item))
 
@@ -214,6 +220,11 @@ tela_lista.pushButton_3.clicked.connect(editar_produtos)
 tela_editar.pushButton.clicked.connect(salvar_edicao)
 tela_lista.pushButton.clicked.connect(exportar_xlsx)
 tela_lista.pushButton_4.clicked.connect(saida_equipamento)
+
+#janelas maximizadas
+controle.setWindowState(Qt.WindowMaximized)
+tela_lista.setWindowState(Qt.WindowMaximized)
+
 
 controle.show()
 app.exec()
