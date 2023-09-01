@@ -9,13 +9,13 @@ from datetime import datetime
 
 numero_id = 0
 
-caminho_controle_ui = r"C:\Users\gabriel.ribeiro\OneDrive - Moovi Comunicação e meios de pagamento EIRELI\Área de Trabalho\Projeto"
-caminho_editar_produto_ui = r"C:\Users\gabriel.ribeiro\OneDrive - Moovi Comunicação e meios de pagamento EIRELI\Área de Trabalho\Projeto\editar_produto.ui"
-caminho_lista_ui = r"C:\Users\gabriel.ribeiro\OneDrive - Moovi Comunicação e meios de pagamento EIRELI\Área de Trabalho\Projeto\lista.ui"
+caminho_controle_ui = r"C:caminho"
+caminho_editar_produto_ui = r"C:caminho"
+caminho_lista_ui = r"C:caminho"
 caminho_saida_ui = r""
 banco = {
     "user": "root",
-    "password": "Tch@2023",
+    "password": "senha",
     "host": "localhost",
     "database": "controle_estoque",
     "port": 3306,
