@@ -1,43 +1,46 @@
-Controle de Estoque - Aplicação PyQt5 e MySQL
+# Controle de Estoque (Projeto em Desenvolvimento)
 
-Este é um projeto de controle de estoque desenvolvido em Python com a biblioteca PyQt5 para a interface gráfica e MySQL como banco de dados. A aplicação permite registrar, listar, editar e excluir produtos do estoque, além de exportar os dados para um arquivo Excel (xlsx).
+Este é um aplicativo de controle de estoque em desenvolvimento. Ele está sendo desenvolvido em Python utilizando a biblioteca PyQt5 para a interface gráfica e MySQL para armazenamento de dados. O aplicativo permitirá o registro de produtos, edição, exclusão, exportação de dados para um arquivo Excel e registro de saídas de equipamentos.
 
+**Nota:** Este projeto ainda não está pronto para uso em produção. Estou trabalhando em sua implementação e planejo adicionar mais funcionalidades e melhorias. Você pode acompanhar o progresso do projeto na seção de problemas (issues) e contribuir com ideias, correções e melhorias.
 
-*Requisitos
+Requisitos
+Antes de executar o aplicativo, certifique-se de ter as seguintes dependências instaladas:
 
 Python 3.x
 PyQt5
 mysql-connector-python
 pandas
-Instalação
+Você também deve configurar um servidor MySQL com as seguintes configurações:
 
-*Certifique-se de que o Python esteja instalado em seu sistema.
-
-Instale as bibliotecas necessárias através do comando:pip install PyQt5 mysql-connector-python pandas
-
-*Como usar
-
-Clone ou baixe este repositório para o seu computador.
-Abra o terminal (ou prompt de comando) e navegue até a pasta do projeto.
-Execute o arquivo controle_estoque.py para iniciar o aplicativo: python controle_estoque.py
-A interface do aplicativo será exibida, permitindo o registro, listagem, edição e exclusão de produtos no estoque.
-
-*Funcionalidades
-
-Registrar Produtos: Preencha os campos na interface e clique no botão "Registrar" para adicionar um novo produto ao estoque.
-Listar Produtos: Clique no botão "Listar" para visualizar todos os produtos registrados no estoque em uma tabela.
-Editar Produtos: Na lista de produtos, clique em um item para selecioná-lo e, em seguida, clique no botão "Editar". Edite os campos desejados e clique em "Salvar" para atualizar as informações do produto.
-Excluir Produtos: Selecione um produto na lista e clique no botão "Excluir" para remover o produto do estoque.
-Exportar para Excel: Clique no botão "Exportar para Excel" para gerar um arquivo "produtos.xlsx" contendo todos os dados do estoque em formato Excel.
-
-*Configurações do Banco de Dados
-
-O aplicativo está configurado para se conectar a um servidor MySQL local.
-
-Usuário: 
-Senha: 
-Host: 
-Banco de Dados: controle_estoque
+Nome de usuário: root
+Senha: senha
+Host: localhost
+Banco de dados: controle_estoque
 Porta: 3306
 
-OBS:Você pode modificar essas configurações no código, caso o seu ambiente de banco de dados seja diferente. Certifique-se de que o servidor MySQL esteja em execução e acessível.
+Como Executar
+1-Clone este repositório para o seu computador:
+2-Navegue até o diretório onde o código-fonte está localizado;
+3-Execute o aplicativo;
+
+Funcionalidades
+Registro de Produtos: Permite adicionar novos produtos ao estoque, incluindo nome, descrição, preço, categoria, data de entrada e quantidade.
+
+Listagem de Produtos: Exibe todos os produtos cadastrados em uma tabela, permitindo a edição, exclusão e exportação para um arquivo Excel.
+
+Edição de Produtos: Permite editar os detalhes de um produto selecionado na tabela.
+
+Exclusão de Produtos: Permite excluir um produto da lista.
+
+Exportação de Dados: Exporta todos os produtos para um arquivo Excel chamado "produtos.xlsx".
+
+Registro de Saída de Equipamentos: Registra a saída de equipamentos do estoque, incluindo a quantidade, destinatário e data de saída.
+
+Contribuições
+Contribuições são bem-vindas! Sinta-se à vontade para abrir problemas (issues) e enviar solicitações de pull (pull requests) para melhorar este aplicativo.
+
+Licença
+Este projeto está licenciado sob a Licença MIT - consulte o arquivo LICENSE para obter detalhes.
+
+Este aplicativo foi desenvolvido por [Seu Nome] e é fornecido gratuitamente. Apreciamos seu interesse e esperamos que seja útil para você!
